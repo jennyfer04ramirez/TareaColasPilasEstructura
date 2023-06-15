@@ -3,9 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package ec.edu.ups.ejemploestructuralistas;
-
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -42,11 +39,9 @@ public class PilaTareas<T> {
     public boolean estaVacia() {
         return pilaTarea.isEmpty();
     }
-
+    
     @Override
     public String toString() {
         return "PilaTareas{" + "pilaTarea=" + pilaTarea + '}';
     }
-    
-    
 }

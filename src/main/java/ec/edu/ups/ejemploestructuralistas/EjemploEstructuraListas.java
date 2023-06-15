@@ -3,7 +3,6 @@
  */
 
 package ec.edu.ups.ejemploestructuralistas;
-
 import java.util.Arrays;
 
 /**
@@ -13,7 +12,9 @@ import java.util.Arrays;
 public class EjemploEstructuraListas {
 
     public static void main(String[] args) {
+
         System.out.println("Colas y Pilas implementacion generica");
+        
         // Instaciamiento de las clases ColaTarea
         ColaTareas<String> colaTareas = new ColaTareas<>();
         ColaTareas<Integer> colaTareasInt = new ColaTareas<>();
@@ -48,9 +49,9 @@ public class EjemploEstructuraListas {
         pilaTareas.agregarTarea(new Tarea(10,10));
         pilaTareas.agregarTarea(new Tarea(11,11));
         
-        pilaTareasDeColas.agregarTarea(new Tarea(12, new ColaTareas()));
-        pilaTareasDeColas.agregarTarea(new Tarea(13, new ColaTareas()));
-        pilaTareasDeColas.agregarTarea(new Tarea(14, new ColaTareas()));
+        pilaTareasDeColas.agregarTarea(new Tarea(12, colaTareas));
+        pilaTareasDeColas.agregarTarea(new Tarea(13, colaTareasInt));
+        pilaTareasDeColas.agregarTarea(new Tarea(14, colaTareasArregloEnteros));
         
         // Procesamiento de las tareas de la Cola<String> mediante un bucle while
         while(!colaTareas.estaVacia()) {
@@ -87,15 +88,47 @@ public class EjemploEstructuraListas {
         // 
         while(!pilaTareas.estaVacia()) {
             Tarea<Integer> tareaProcesada = pilaTareas.procesarTarea();
-            System.out.println("Procesando tarea de la pila: \n\t Sale --> " + tareaProcesada.toString());
+            System.out.println("Procesando tarea de la pila: \n\t Sale --> " + tareaProcesada.getId() + " - " + tareaProcesada.getAtributo());
         }
         
         System.out.println("\n __________________________________________ \n");
         
         // 
-        while(!pilaTareasDeColas.estaVacia()) {
-            Tarea<ColaTareas> tareaProcesada = pilaTareasDeColas.procesarTarea();
-            //System.out.println("Procesando tarea de la pila de colas: \n\t Sale --> " + tareaProcesada.getId() + " - " + Stack.toString(tareaProcesada.getAtributo()));
+                
+        while (!pilaTareasDeColas.estaVacia()) {
+            Tarea<ColaTareas> colaTarea = pilaTareasDeColas.procesarTarea();
+            while (!colaTarea.getAtributo().estaVacia()) {
+                Tarea<?> tareaProcesada = colaTarea.getAtributo().procesarTarea();
+                Object atributo = tareaProcesada.getAtributo();
+                if (atributo instanceof int[]) {
+                    int[] arreglo = (int[]) atributo;
+                    for (int i = 0; i < arreglo.length; i++) {
+                        System.out.println("Procesando tarea de la pila: \n\t Sale--> " + tareaProcesada.getId() + " - " + arreglo[i]);
+                    }
+                } else {
+                    System.out.println("Procesando tarea de la pila: \n\t Sale--> " + tareaProcesada.getId() + " - " + atributo);
+                }
+            }
         }
     }
+    
+    //public void procesarTareaCola(Tarea<ColaTareas> pilaTareasDeColas){
+    //        while (!colaTarea.getAtributo().estaVacia()) {
+    //        Tarea<?> tareaProcesada = colaTarea.getAtributo().procesarTarea();
+    //        Object atributo = tareaProcesada.getAtributo();
+    //        if (atributo instanceof int[]) {
+    //            int[] arreglo = (int[]) atributo;
+    //            for (int i = 0; i < arreglo.length; i++) {
+    //                System.out.println("Procesando tarea de la pila: \n\t Sale--> " + tareaProcesada.getId() + " - " + arreglo[i]);
+    //            }
+    //        } else if (atributo instanceof String[]) {
+    //            String[] arreglo = (String[]) atributo;
+    //            for (int i = 0; i < arreglo.length; i++) {
+    //                System.out.println("Procesando tarea de la pila: \n\t Sale--> " + tareaProcesada.getId() + " - " + arreglo[i]);
+    //            }
+    //        } else {
+    //            System.out.println("Procesando tarea de la pila: \n\t Sale--> " + tareaProcesada.toString());
+    //        }
+    //    }
+    //}
 }
